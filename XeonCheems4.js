@@ -9130,25 +9130,25 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠${prefix}strawberry
 ╠${prefix}discovery
 ╠${prefix}1917
-╠ ${prefix}sci_fi
-╠ ${prefix}ancient
-╠ ${prefix}fabric
-╠ ${prefix}hoorror
-╠ ${prefix}whitebear
-╠ ${prefix}juice
-╠ ${prefix}batman
-╠ ${prefix}multicolor
-╠ ${prefix}collwall
-╠ ${prefix}wonderful
-╠ ${prefix}cool
-╠ ${prefix}sketch
-╠ ${prefix}marvel
-╠ ${prefix}foggy
-╠ ${prefix}writing
-╠ ${prefix}halloweenfire
-╠ ${prefix}halloween
-╠ ${prefix}watercolor
-╠ ${prefix}classic
+╠${prefix}sci_fi
+╠${prefix}ancient
+╠${prefix}fabric
+╠${prefix}hoorror
+╠${prefix}whitebear
+╠${prefix}juice
+╠${prefix}batman
+╠${prefix}multicolor
+╠${prefix}collwall
+╠${prefix}wonderful
+╠${prefix}cool
+╠${prefix}sketch
+╠${prefix}marvel
+╠${prefix}foggy
+╠${prefix}writing
+╠${prefix}halloweenfire
+╠${prefix}halloween
+╠${prefix}watercolor
+╠${prefix}classic
 ╠═════✪「 DOWNLOAD 」	
 ╠${prefix}instagram [url]
 ╠${prefix}igtv [url]
@@ -9193,24 +9193,24 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠${prefix}animestory [query]
 ╠${prefix}manga [query]
 ╠${prefix}wattpad [query]
-╠ ${prefix}mcserver [ip|port]
-╠ ${prefix}drakor [query]
+╠${prefix}mcserver [ip|port]
+╠${prefix}drakor [query]
 ╠═══════✪「 CONVERT 」
-╠ ${prefix}toimage [reply stick]
-╠ ${prefix}sticker [reply img|gif]
-╠ ${prefix}take [reply img|gif|stik]
-╠ ${prefix}smeme [reply img]
-╠ ${prefix}emoji [emoji]
-╠ ${prefix}tovideo [reply img]
-╠ ${prefix}togif [reply stick]
-╠ ${prefix}tourl [reply img]
-╠ ${prefix}tovn [reply aud]
-╠ ${prefix}tomp3 [reply vn]
-╠ ${prefix}toaudio [reply vid]
-╠ ${prefix}ebinary [reply txt]
-╠ ${prefix}dbinary [reply txt]
-╠ ${prefix}tinyurl [link]
-╠ ${prefix}styletext [text]
+╠${prefix}toimage [reply stick]
+╠${prefix}sticker [reply img|gif]
+╠${prefix}take [reply img|gif|stik]
+╠${prefix}smeme [reply img]
+╠${prefix}emoji [emoji]
+╠${prefix}tovideo [reply img]
+╠${prefix}togif [reply stick]
+╠${prefix}tourl [reply img]
+╠${prefix}tovn [reply aud]
+╠${prefix}tomp3 [reply vn]
+╠${prefix}toaudio [reply vid]
+╠${prefix}ebinary [reply txt]
+╠${prefix}dbinary [reply txt]
+╠${prefix}tinyurl [link]
+╠${prefix}styletext [text]
 ╠${prefix}volume [reply aud]
 ╠${prefix}tempo [reply aud]
 ╠${prefix}bass [reply aud]
@@ -9635,7 +9635,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠ ${prefix}darkjoke
 ╠ ${prefix}quotes
 ╠ ${prefix}animequotes
-╠${prefix}jalantikus-meme
+╠ ${prefix}jalantikus-meme
 ╠ ${prefix}merdeka-news 
 ╠ ${prefix}kontan-news 
 ╠ ${prefix}cnbc-news 
@@ -9651,11 +9651,11 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠ ${prefix}antara-news 
 ╠ ${prefix}cnn-news 
 ╠ ${prefix}fajar-news 
-╠${prefix}cinemaschedule
-╠${prefix}wiki
-╠${prefix}covidindo
-╠${prefix}earthquake
-╠${prefix}tvschedule
+╠ ${prefix}cinemaschedule
+╠ ${prefix}wiki
+╠ ${prefix}covidindo
+╠ ${prefix}earthquake
+╠ ${prefix}tvschedule
 ╠══════✪「 INDO HSCOPE 」
 ╠${prefix}nomorhoki
 ╠${prefix}artimimpi 
@@ -9890,25 +9890,25 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 MAKER 」
 ╠${prefix}strawberry
 ╠${prefix}discovery
 ╠${prefix}1917
-╠ ${prefix}sci_fi
-╠ ${prefix}ancient
-╠ ${prefix}fabric
-╠ ${prefix}hoorror
-╠ ${prefix}whitebear
-╠ ${prefix}juice
-╠ ${prefix}batman
-╠ ${prefix}multicolor
-╠ ${prefix}collwall
-╠ ${prefix}wonderful
-╠ ${prefix}cool
-╠ ${prefix}sketch
-╠ ${prefix}marvel
-╠ ${prefix}foggy
-╠ ${prefix}writing
-╠ ${prefix}halloweenfire
-╠ ${prefix}halloween
-╠ ${prefix}watercolor
-╠ ${prefix}classic
+╠${prefix}sci_fi
+╠${prefix}ancient
+╠${prefix}fabric
+╠${prefix}hoorror
+╠${prefix}whitebear
+╠${prefix}juice
+╠${prefix}batman
+╠${prefix}multicolor
+╠${prefix}collwall
+╠${prefix}wonderful
+╠${prefix}cool
+╠${prefix}sketch
+╠${prefix}marvel
+╠${prefix}foggy
+╠${prefix}writing
+╠${prefix}halloweenfire
+╠${prefix}halloween
+╠${prefix}watercolor
+╠${prefix}classic
 ╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'downloadmenu':
@@ -9966,7 +9966,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 SEARCH 」
 ╠${prefix}anime [query]
 ╠${prefix}manga [query]
 ╠${prefix}wattpad [query]
-╠ ${prefix}mcserver [ip|port]
+╠${prefix}mcserver [ip|port]
 ╠${prefix}drakor [query]
 ╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
