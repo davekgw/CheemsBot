@@ -3077,7 +3077,6 @@ replay('Success in turning off antiwame in this group')
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
 if (!isCreator) return replay(mess.owner)
-if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
 if (args[0] === "on") {
 if (AntiNsfw) return replay('Already activated')
@@ -3646,7 +3645,6 @@ case 'femdom': case 'cum': case 'ero': case 'cuckold': case 'blowjob': case 'bds
 case 'ahegao': case 'ass': case 'orgy': case 'panties': case 'pussy': case 'thighs': case 'yuri': case 'tentacles':
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
 try{
 reply(mess.wait)
@@ -3658,7 +3656,6 @@ break
    case 'spank':
       if (isBan) return reply(mess.ban)	 			
    if (isBanChat) return reply(mess.banChat)
-   if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
 reply(mess.wait)
 spankd = await axios.get(`https://nekos.life/api/v2/img/spank`)                                   
@@ -3671,7 +3668,6 @@ break
 case 'blowjobgif': case 'bj' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
 reply(mess.wait)
 bjd = await axios.get(`https://api.waifu.pics/nsfw/blowjob`)         
@@ -3684,7 +3680,6 @@ break
 case 'hentaivid': case 'hentaivideo': {
 	                        	            	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
-	if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
                 reply(mess.wait)
                 anu = await hentai()
@@ -3695,7 +3690,6 @@ if (!AntiNsfw) return reply(mess.nsfw)
 case 'trap' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
 reply(mess.wait)
  waifudd = await axios.get(`https://waifu.pics/api/nsfw/${command}`)       
@@ -3716,7 +3710,6 @@ case 'hentai-neko' :
 case 'hneko' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
     waifudd = await axios.get(`https://waifu.pics/api/nsfw/neko`)
  let hnekobot = [
@@ -3736,7 +3729,6 @@ case 'hentai-waifu' :
 case 'nwaifu' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
 if (!AntiNsfw) return reply(mess.nsfw)
 reply(mess.wait)
     waifudd = await axios.get(`https://waifu.pics/api/nsfw/waifu`)         
@@ -3814,7 +3806,6 @@ break
 case 'animenom' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
     waifudd = await axios.get(`https://waifu.pics/api/sfw/nom`)
  let xxhnekobot = [
     {buttonId: `.nom`, buttonText: {displayText: `Next ⚡`}, type: 1},
