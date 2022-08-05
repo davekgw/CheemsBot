@@ -3076,11 +3076,12 @@ replay('Success in turning off antiwame in this group')
   case 'nsfw': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
-if (!m.isGroup) return replay(mess.group)
+if (!isCreator) return replay(mess.owner)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
 if (args[0] === "on") {
 if (AntiNsfw) return replay('Already activated')
+if (!isCreator) return replay(mess.owner)
 ntnsfw.push(from)
 replay('Success in turning on nsfw in this group')
 var groupe = await XeonBotInc.groupMetadata(from)
@@ -3092,6 +3093,7 @@ mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
 XeonBotInc.sendMessage(from, {text: `\`\`\`「 ⚠️Warning⚠️ 」\`\`\`\n\nNsfw(not safe for work) feature has been enabled in this group, which means one can access sexual graphics from the bot!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
 } else if (args[0] === "off") {
 if (!AntiNsfw) return replay('Already deactivated')
+if (!isCreator) return replay(mess.owner)
 let off = ntnsfw.indexOf(from)
 ntnsfw.splice(off, 1)
 replay('Success in turning off nsfw in this group')
@@ -8799,7 +8801,7 @@ XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key 
                                 }  
                             }, {
                                 quickReplyButton: {
-                                    displayText: 'Owner 🤣',
+                                    displayText: 'Owner 👤',
                                     id: 'owner'
                                 }
                             }]
@@ -8820,7 +8822,7 @@ XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key 
             { urlButton: { displayText: `Script 🍜`, url: `${botscript}` } },
             { quickReplyButton: { displayText: `All Menu 🍱`, id: 'allmenu'} },
             { quickReplyButton: { displayText: `List Menu 🍢`, id: 'command'} },
-            { quickReplyButton: { displayText: `Owner 🤣`, id: 'owner'} }
+            { quickReplyButton: { displayText: `Owner 👤`, id: 'owner'} }
         	]
         	XeonBotInc.sendMessage(m.chat, { caption: menulist, document: fs.readFileSync('./XeonMedia/theme/cheems.xlsx'), mimetype: `${docs}`, fileName: `${ownername}`, templateButtons: buttonmenu, footer: `${botname}`, mentionedJid: [m.sender] })
                         }
@@ -8920,7 +8922,7 @@ let template = await generateWAMessageFromContent(m.chat, proto.Message.fromObje
 										"rowId": `${prefix}animestickermenu`
 									     },
 									{
-										"title": "Nsfw Menu 🤓",
+										"title": "Nsfw Menu (Owner Open)🤓",
 										"description": "Displays The List Of Nsfe Features",
 										"rowId": `${prefix}nsfwmenu`
 									     },
@@ -8988,8 +8990,6 @@ case 'allmenu':
 	if (isBanChat) return reply(mess.banChat)
 var unicorn = await getBuffer(picak+'All Menu')
 await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」	
-╠ ${prefix}self
-╠ ${prefix}public
 ╠ ${prefix}antitag
 ╠ ${prefix}rentbot [add/del]
 ╠ ${prefix}rentlist
@@ -9008,7 +9008,6 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠ ${prefix}setexif
 ╠ ${prefix}block [tag/number]
 ╠ ${prefix}unblock [tag/number]
-╠ ${prefix}coowner [add/del]
 ╠═══════✪「 GROUP 」	        
 ╠${prefix}grousetting
 ╠${prefix}grouplink
@@ -9352,32 +9351,6 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠${prefix}cringe
 ╠${prefix}neko
 ╠${prefix}gura
-╠═══════✪「 NSFW 」
-╠${prefix}hentaivideo
-╠${prefix}yuri
-╠${prefix}masturbation
-╠${prefix}thighs
-╠${prefix}pussy
-╠${prefix}panties
-╠${prefix}orgy
-╠${prefix}ahegao
-╠${prefix}ass
-╠${prefix}bdsm
-╠${prefix}blowjob
-╠${prefix}cuckold
-╠${prefix}ero
-╠${prefix}gasm
-╠${prefix}cum
-╠${prefix}femdom
-╠${prefix}foot
-╠${prefix}gangbang
-╠${prefix}glasses
-╠${prefix}jahy
-╠${prefix}trap
-╠${prefix}blowjobgif
-╠${prefix}spank
-╠${prefix}hneko
-╠${prefix}nwaifu
 ╠═══════✪「 FUN 」
 ╠ ${prefix}how [text
 ╠ ${prefix}when [text]
@@ -9713,8 +9686,6 @@ case 'ownermenu':
 	if (isBanChat) return reply(mess.banChat)
 var unicorn = await getBuffer(picak+'Owner Menu')
 await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」	
-╠ ${prefix}self
-╠ ${prefix}public
 ╠ ${prefix}antitag
 ╠ ${prefix}ban [add/del]
 ╠ ${prefix}banchat [on/off]
@@ -9990,19 +9961,19 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 CONVERT 」
 ╠ ${prefix}dbinary [reply txt]
 ╠ ${prefix}tinyurl [link]
 ╠ ${prefix}styletext [text]
-╠${prefix}volume [reply aud]
-╠${prefix}tempo [reply aud]
-╠${prefix}bass [reply aud]
-╠${prefix}blown [reply aud]
-╠${prefix}deep [reply aud]
-╠${prefix}earrape [reply aud]
-╠${prefix}fast [reply aud]
-╠${prefix}fat [reply aud]
-╠${prefix}nightcore [reply aud]
-╠${prefix}reverse [reply aud]
-╠${prefix}robot [reply aud]
-╠${prefix}slow [reply aud]
-╠${prefix}squirrel [reply aud]
+╠ ${prefix}volume [reply aud]
+╠ ${prefix}tempo [reply aud]
+╠ ${prefix}bass [reply aud]
+╠ ${prefix}blown [reply aud]
+╠ ${prefix}deep [reply aud]
+╠ ${prefix}earrape [reply aud]
+╠ ${prefix}fast [reply aud]
+╠ ${prefix}fat [reply aud]
+╠ ${prefix}nightcore [reply aud]
+╠ ${prefix}reverse [reply aud]
+╠ ${prefix}robot [reply aud]
+╠ ${prefix}slow [reply aud]
+╠ ${prefix}squirrel [reply aud]
 ╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'randomimagemenu':
@@ -10498,7 +10469,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 INDO 」
 ╠ ${prefix}darkjoke
 ╠ ${prefix}quotes
 ╠ ${prefix}animequotes
-╠${prefix}jalantikus-meme
+╠ ${prefix}jalantikus-meme
 ╠ ${prefix}merdeka-news 
 ╠ ${prefix}kontan-news 
 ╠ ${prefix}cnbc-news 
@@ -10514,11 +10485,11 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 INDO 」
 ╠ ${prefix}antara-news 
 ╠ ${prefix}cnn-news 
 ╠ ${prefix}fajar-news 
-╠${prefix}cinemaschedule
-╠${prefix}wiki
-╠${prefix}covidindo
-╠${prefix}earthquake
-╠${prefix}tvschedule
+╠ ${prefix}cinemaschedule
+╠ ${prefix}wiki
+╠ ${prefix}covidindo
+╠ ${prefix}earthquake
+╠ ${prefix}tvschedule
 ╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'indohoroscopemenu':
