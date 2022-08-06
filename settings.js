@@ -61,13 +61,24 @@ global.socialm = "GitHub: davekgw" //ur github or insta name
 global.location = "Indonesia, Manado, Airmadidi" //ur location
 
 //bot bomdy 
-global.owner = ['6289631008798']
-global.ownertag = '6289631008798' //ur tag number
+global.owner = ['+6289631008798']
+global.ownertag = '+6289631008798' //ur tag number
 global.botname = 'SmileyBotz' //ur bot name
 global.linkz = "https://github.com/davekgw" //your theme url which will be displayed on whatsapp
 global.websitex = "https://github.com/davekgw" //ur website to be displayed
 global.botscript = 'https://github.com/davekgw/CheemsBot' //script link
-global.reactmoji = "🙌🏻" //ur menu react emoji
+global.reactmoji = "🍂" //ur menu react emoji
+global.reactlistmenu = "🪐" 
+global.reactallmenu = "💫"
+global.reactkick = "🐦"
+global.reactadd = "🙌🏻"
+global.reactbanchat = "💤"
+global.reactban = "😂"
+global.reactunban = "😜"
+global.reactinv = "🌿"
+global.reactselling = "💱"
+global.reactrpg = "⚔️"
+global.reactsetpp = "☃️"
 global.themeemoji = "🐦" //ur theme emoji
 global.packname = "Smiley•" //ur sticker watermark packname
 global.author = "🐦Dv" //ur sticker watermark author
@@ -123,7 +134,7 @@ global.mess = {
     global.limitawal = {
     premium: "Infinity",
     free: 12,
-    monayawal: 10000
+    monayawal: 1000
 }
    global.rpg = {
    darahawal: 100,

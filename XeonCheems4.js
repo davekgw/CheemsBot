@@ -1094,22 +1094,21 @@ const reactionMessage = {
                 const timestampe = speed();
 const latensie = speed() - timestampe
                 const menulist = `┌─❖
-│「 Hi 👋 」
-└┬❖ 「 ${pushname} 」
-┌┤✑  How Are You? 😄
+│「 𝗛𝗔𝗩𝗘 𝗙𝗨𝗡 𝗪𝗜𝗧𝗛 𝗠𝗬 𝗕𝗢𝗧🤖 」
+└┬❖ 「 *Free For All* 」
+┌┤ 
+││✑ 「 ${pushname} 」
 │└────────────┈ ⳹
 │
-└─「 𝘽𝙊𝙏 𝙄𝙉𝙁𝙊 」       
-│𝗦𝗽𝗲𝗲𝗱 : ${latensie.toFixed(4)} miliseconds
-│𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${runtime(process.uptime())}
+└─「 𝘽𝙊𝙏 𝙄𝙉𝙁𝙊 」
 │𝗕𝗼𝘁 𝗡𝗮𝗺𝗲 : ${global.botname}
 │𝗢𝘄𝗻𝗲𝗿 𝗡𝗮𝗺𝗲 : ${global.ownername}
 │𝗢𝘄𝗻𝗲𝗿 𝗡𝗼. : ${global.owner}
+│𝗧𝗼𝘁𝗮𝗹 𝗨𝘀𝗲𝗿 : ${Object.keys(global.db.data.users).length}
+│𝗦𝗽𝗲𝗲𝗱 : ${latensie.toFixed(4)} miliseconds
+│𝗥𝘂𝗻𝘁𝗶𝗺𝗲 : ${runtime(process.uptime())}
 │𝗛𝗼𝘀𝘁 𝗡𝗮𝗺𝗲 : ${os.hostname()}
 │𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 : ${os.platform()}
-│𝗧𝗼𝘁𝗮𝗹 𝗨𝘀𝗲𝗿 : ${Object.keys(global.db.data.users).length}
-│𝗧𝗼𝘁𝗮𝗹 𝗛𝗶𝘁 : ${jumlahcmd}
-│𝗧𝗼𝘁𝗮𝗹 𝗛𝗶𝘁 𝗧𝗼𝗱𝗮𝘆 : ${jumlahharian}
 └┬────────────┈ ⳹
    │✑  Please Select
    │✑  The Button Below
@@ -1158,10 +1157,11 @@ switch(command) {
  case 'banchat': {
  if (isBan) return reply(mess.ban)	 			
 if (!isCreator) return replay(mess.owner)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactbanchat}`, key: m.key }})
 if (args[0] === "on") {
 if (isBanChat) return replay('Already Banned')
 banchat.push(from)
-replay('Success in banning the gc')
+replay('Success in banning')
 var groupe = await XeonBotInc.groupMetadata(from)
 var members = groupe['participants']
 var mems = []
@@ -1169,12 +1169,15 @@ members.map(async adm => {
 mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
 })
 XeonBotInc.sendMessage(from, {text: `\`\`\`「 ⚠️Warning⚠️ 」\`\`\`\n\nThe bot has been disabled in this group, now no one will able to use the bot in this group!`, contextInfo: { mentionedJid : mems }}, {quoted:m})
-} else if (args[0] === "off") {
+} 
+else if (args[0] === "off") {
 if (!isBanChat) return replay('Already Unbanned')
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactbanchat}`, key: m.key }})
 let off = banchat.indexOf(from)
 banchat.splice(off, 1)
-replay('Success in unbanning the gc')
-} else {
+replay('Success in unbanning')
+} 
+else {
   let buttonsntnsfw = [
   { buttonId: `${command} on`, buttonText: { displayText: 'Ban' }, type: 1 },
   { buttonId: `${command} off`, buttonText: { displayText: 'Unban' }, type: 1 }
@@ -1185,13 +1188,14 @@ replay('Success in unbanning the gc')
   break
 
 case 'ban': {
-	   if (isBan) return reply(mess.ban)	 			
+if (isBan) return reply(mess.ban)
 if (isBanChat) return reply(mess.banChat)
 if (!isCreator) return replay(mess.owner)
 if (!args[0]) return replay(`Select add or del(add to ban, del to unban), For Example: Reply *${prefix}ban add* to the user u want to ban`)
 if (args[1]) {
 orgnye = args[1] + "@s.whatsapp.net"
-} else if (m.quoted) {
+} 
+else if (m.quoted) {
 orgnye = m.quoted.sender
 }
 const isBane = banUser.includes(orgnye)
@@ -1199,12 +1203,28 @@ if (args[0] === "add") {
 if (isBane) return ads('User was already banned')
 banUser.push(orgnye)
 replay(`Successfully banned the user`)
-} else if (args[0] === "del") {
+var groupe = await XeonBotInc.groupMetadata(from)
+var members = groupe['participants']
+var mems = []
+members.map(async adm => {
+mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
+})
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactban}`, key: m.key }}) 
+} 
+else if (args[0] === "del") {
 if (!isBane) return ads('User was already unbanned')
 let delbans = banUser.indexOf(orgnye)
 banUser.splice(delbans, 1)
 replay(`Successfully unbanned the user`)
-} else {
+var groupe = await XeonBotInc.groupMetadata(from)
+var members = groupe['participants']
+var mems = []
+members.map(async adm => {
+mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
+})
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactunban}`, key: m.key }}) 
+}
+else {
 replay("Error")
 }
 }
@@ -1213,6 +1233,7 @@ break
         case 'inventori': case 'inventory': case 'profile':{
         	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactinv}`, key: m.key }})
 if (q.includes('--help')) return reply(examkosong) 
   if (!isDarah){ addInventoriDarah(m.sender, DarahAwal) }
   if (!isInventory){ addInventori(m.sender) }
@@ -1222,7 +1243,7 @@ if (q.includes('--help')) return reply(examkosong)
      let teksehmazeh = `_[ 👩🏻‍💼INFO USER👨🏻‍💼 ]_\n\n`
      teksehmazeh += `*❤️Your Blood* : ${getDarah(m.sender)}\n`
      teksehmazeh += `*◻️️Your Iron* : ${getBesi(m.sender)}\n`
-     teksehmazeh += `*🌟Your Gold* : ${getEmas(m.sender)}\n`
+     teksehmazeh += `*💰Your Gold* : ${getEmas(m.sender)}\n`
      teksehmazeh += `*💎Your Emerald* : ${getEmerald(m.sender)}\n`
      teksehmazeh += `*⏺️Your Limit* : ${getLimit(m.sender)}\n`
      teksehmazeh += `*🧪Your Potion* : ${getPotion(m.sender)}\n\n`
@@ -1240,6 +1261,7 @@ if (q.includes('--help')) return reply(examkosong)
         case 'userlimit': 
         if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 {      
    let txt = `「 *ALL LIMIT USER* 」\n\n`
      for (let i of _limit){
@@ -1251,6 +1273,7 @@ if (isBanChat) return reply(mess.banChat)
  case 'leaderboard':
  if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactrpg}`, key: m.key }})
 {      
    let txt = `「 *LEADERBOARD* 」\n\n`
      for (let i of _buruan){
@@ -1268,12 +1291,13 @@ if (isBanChat) return reply(mess.banChat)
 case 'mining': case 'mine':{
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactrpg}`, key: m.key }})
 if (q.includes('--help')) return reply(examkosong) 
   if (!isInventory){ addInventori(m.sender) }
   if (isCekDarah < 1) return reply(`You're Tired!, Try To Heal Using Potions`) 
-  let besi = [1,2,5,0,3,0,1,1,4,1,5,0,0]
-  let emas = [0,1,2,3,0,0,0,1,1,0,0,2]
-  let emerald = [0,0,1,0,0,1,0,2,1,0,0,1]
+  let besi = [10,2,5,1,15,25,24,24,21,19,15,17,11,12,13,12,11,20,30,0,3,0,1,1,4,1,5,0,0]
+  let emas = [10,10,10,15,19,11,15,11,13,13,12,12,10,10,7,19,20,0,1,2,3,0,0,0,1,1,0,0,2]
+  let emerald = [3,1,1,2,2,3,0,0,4,5,5,0,0,1,0,0,1,0,2,1,0,0,1]
   var besinya = besi[Math.floor(Math.random() * besi.length)]  
   var emasnya = emas[Math.floor(Math.random() * emas.length)]  
   var emeraldnya = emerald[Math.floor(Math.random() * emerald.length)]  
@@ -2035,6 +2059,7 @@ XeonBotInc.sendMessage(from, { text: `*${command}*\n\nName : ${q}\nAnswer : *${s
       	            	if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
             if (!m.isGroup) return replay(`${mess.group}`)
+            XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             let member = participants.map(u => u.id)
             let me = m.sender
             let jodoh = member[Math.floor(Math.random() * member.length)]
@@ -2049,6 +2074,7 @@ XeonBotInc.sendMessage(from, { text: `*${command}*\n\nName : ${q}\nAnswer : *${s
 case 'dare':
                    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+	XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
               const dare =[
     "eat 2 tablespoons of rice without any side dishes, if it's dragging you can drink",
     "spill people who make you pause",
@@ -2140,6 +2166,7 @@ case 'dare':
        case 'truth':
        if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+	XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
               const truth =[
     "Have you ever liked anyone? How long?",
     "If you can or if you want, which gc/outside gc would you make friends with? (maybe different/same type)",
@@ -2238,6 +2265,7 @@ case 'dare':
 case 'when':
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 				if (!text) return replay(`Use Text, Example : ${prefix + command} will i get married `)
 					const kapan = ['5 More Days', '10 More Days', '15 More Days','20 More Days', '25 More Days','30 More Days','35 More Days','40 More Days','45 More Days','50 More Days','55 More Days','60 More Days','65 More Days','70 More Days','75 More Days','80 More Days','85 More Days','90 More Days','100 More Days','5 Months More', '10 Months More', '15 Months More','20 Months More', '25 Months More','30 Months More','35 Months More','40 Months More','45 Months More','50 Months More','55 Months More','60 Months More','65 Months More','70 Months More','75 Months More','80 Months More','85 Months More','90 Months More','100 Months More','1 More Year','2 More Years','3 More Years','4 More Years','5 More Years','Tomorrow','The Day After Tomorrow',`After This Command, You Too ${q}`]
 					const kapankah = kapan[Math.floor(Math.random() * kapan.length)]
@@ -2246,6 +2274,7 @@ XeonBotInc.sendMessage(from, { text: `Question : ${q}\nAnswer : *${kapankah}*` }
 case 'wangy':
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
               if (!text) return replay(`Use Text, Example : ${prefix + command} hinata`)
               qq = q.toUpperCase()
               awikwok = `${qq} ${qq} ${qq} ❤️ ❤️ ❤️ WANGY WANGY WANGY WANGY HU HA HU HA HU HA, aaah the smell of hair ${qq} smelly i want to smell the fragrance ${qq} AAAAAAAAH ~ Her hair.... aaah i want to stroke her hair too ~~ AAAAAH ${qq} first time out in anime is cute too ❤️ ❤️ ❤️ so AAAAAAAH ${qq} AAAAAA LUCCUUUUUUUUUUUUU............ ${qq} AAAAAAAAAAAAAAAAAAAAGH ❤️ ❤️ ❤️what ? ${qq} it's not real ? Just HELL you say ? no, no no no no no no no no no no no no no no no !! I DON'T CARE ABOUT THE REALITY, I DON'T CARE. ❤️ ❤️ ❤️ ${qq} me ... ${qq} on the laptop watching me, ${qq} .. you believe in me ? aaaaaaaaaaah thanks ${q} I don't want to give up ${qq} aaaaaah ❤️ ❤️ ❤️ YEAAAAAAAAAAAH I STILL HAVE ${qq} ALSO NOT THE SAME AAAAAAAAAAAAAAH`
@@ -2254,6 +2283,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'checkdeath':
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
              if (!text) return replay(`Use Someone's Name, Example : ${prefix + command} Bot`)
               predea = await axios.get(`https://api.agify.io/?name=${q}`)
               reply(`Name : ${predea.data.name}\n*Dead At Age :* ${predea.data.age} Year.\n\n_Quick, Quick, Repent Bro, Because No One Knows About Death_`)
@@ -2262,6 +2292,7 @@ if (isBanChat) return reply(mess.banChat)
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
                 if (!isCreator) return replay(`${mess.owner}`)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!text) return replay(`Enter The Group Link!`)
                 if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return replay(`Invalid Link!`)
                 reply(mess.wait)
@@ -2272,6 +2303,7 @@ if (isBanChat) return reply(mess.banChat)
                                case 'leavegc': case 'leavegroup': {
 if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	reply(mess.wait)
                 if (!isCreator) return replay(`${mess.owner}`)
                 await XeonBotInc.groupLeave(m.chat).then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
@@ -2280,6 +2312,7 @@ if (isBan) return reply(mess.ban)
             case 'setexif': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                if (!isCreator) return replay(`${mess.owner}`)
                if (!text) return replay(`Example : ${prefix + command} packname|author`)
           global.packname = text.split("|")[0]
@@ -2290,6 +2323,7 @@ if (isBanChat) return reply(mess.banChat)
 	case 'kick': {
 		if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 		if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -2300,6 +2334,7 @@ if (isBanChat) return reply(mess.banChat)
 	case 'add': {
 		if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 		if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -2313,6 +2348,7 @@ if (isBanChat) return reply(mess.banChat)
 		if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await XeonBotInc.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
 	}
@@ -2320,6 +2356,7 @@ if (isBanChat) return reply(mess.banChat)
 	case 'demote': {
 		if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 		if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -2330,6 +2367,7 @@ if (isBanChat) return reply(mess.banChat)
         case 'block': {
         	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 		if (!isCreator) return replay(`${mess.owner}`)
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await XeonBotInc.updateBlockStatus(users, 'block').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
@@ -2338,6 +2376,7 @@ if (isBanChat) return reply(mess.banChat)
         case 'unblock': {
         	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 		if (!isCreator) return replay(`${mess.owner}`)
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await XeonBotInc.updateBlockStatus(users, 'unblock').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
@@ -2345,6 +2384,7 @@ if (isBanChat) return reply(mess.banChat)
 	break
 	    case 'setname': case 'setgcname': case 'setsubject': {
 		if (isBan) return reply(mess.ban)	 			
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (isBanChat) return reply(mess.banChat)
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
@@ -2356,6 +2396,7 @@ if (isBanChat) return reply(mess.banChat)
           case 'setdesc': case 'setdescription': {
           	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) replay(`${mess.admin}`)
@@ -2366,6 +2407,7 @@ if (isBanChat) return reply(mess.banChat)
           case 'setbotpp': {
           	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!isCreator) return replay(`${mess.owner}`)
                 if (!quoted) return replay(`Send/Reply Image With Caption ${prefix + command}`)
                 if (!/image/.test(mime)) return replay(`Send/Reply Image With Caption ${prefix + command}`)
@@ -2378,6 +2420,7 @@ if (isBanChat) return reply(mess.banChat)
            case 'setgrouppp': case 'setgruppp': case 'setgcpp': {
            	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
                 if (!quoted) return replay(`Send/Reply Image With Caption ${prefix + command}`)
@@ -2391,6 +2434,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'tagall': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -2406,6 +2450,7 @@ let teks = `╚»˙·٠•●♥ Tag All ♥●•٠·˙«╝
                 case 'hidetag': {
                 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.isGroup) return replay(`${mess.group}`)
             if (!isBotAdmins) return replay(`${mess.botAdmin}`)
             if (!isAdmins) return replay(`${mess.admin}`)
@@ -2415,6 +2460,7 @@ if (isBanChat) return reply(mess.banChat)
 	    case 'style': case 'styletext': {
 		if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	        if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply(mess.endLimit) //wont response when limit runs out\\
 		db.data.users[m.sender].limit -= 1 // -1 limit
 		let { styletext } = require('./lib/scraper')
@@ -2430,6 +2476,7 @@ if (isBanChat) return reply(mess.banChat)
                case 'vote': {
                	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.isGroup) return replay(`${mess.group}`)
             if (m.chat in vote) replay(`_There Are Still Votes In This Chat!_\n\n*${prefix}delvote* - To Delete Vote Session`)
             if (!text) return replay(`Enter Reason For Vote, Example: *${prefix + command} Handsome Owner*`)
@@ -2474,6 +2521,7 @@ let buttonsVote = [
                case 'upvote': {
                	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.isGroup) return replay(`${mess.group}`)
             if (!(m.chat in vote)) return replay(`_*No Voting In This Group!*_\n\n*${prefix}vote* - To Start Voting`)
             isVote = vote[m.chat][1].concat(vote[m.chat][2])
@@ -2518,6 +2566,7 @@ ${vote[m.chat][2].map((v, i) => `┃╠ ${i + 1}. @${v.split`@`[0]}`).join('\n')
                 case 'devote': {
                 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.isGroup) return replay(`${mess.group}`)
             if (!(m.chat in vote)) return replay(`_*No Voting In This Group!*_\n\n*${prefix}vote* - To Start Voting`)
             isVote = vote[m.chat][1].concat(vote[m.chat][2])
@@ -2563,6 +2612,7 @@ ${vote[m.chat][2].map((v, i) => `┃╠ ${i + 1}. @${v.split`@`[0]}`).join('\n')
 case 'checkvote':
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(`${mess.group}`)
 if (!(m.chat in vote)) return replay(`_*No Voting In This Group!*_\n\n*${prefix}vote* - To Start Voting`)
 teks_vote = `*「 VOTE 」*
@@ -2593,6 +2643,7 @@ break
 		case 'deletevote': case'delvote': case 'hapusvote': {
 			if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.isGroup) return replay(`${mess.group}`)
             if (!(m.chat in vote)) return replay(`_*No Voting In This Group!*_\n\n*${prefix}vote* - To Start Voting`)
             delete vote[m.chat]
@@ -2602,6 +2653,7 @@ if (isBanChat) return reply(mess.banChat)
                case 'group': case 'grup': {
                	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -2622,6 +2674,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'editinfo': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -2643,6 +2696,7 @@ case 'autosticker':
             case 'autostiker':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return reply(mess.botAdmin)
 if (!isAdmins && !isCreator) return reply(mess.admin)
@@ -2663,6 +2717,7 @@ case 'autostickerpc':
             case 'autostikerpc':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (args.length < 1) return reply('type autosticker on to activate\ntype autosticker off to disable')
 if (args[0]  === 'on'){
@@ -2680,6 +2735,7 @@ break
 case 'antilinkgc': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2711,6 +2767,7 @@ replay('Success in turning off group chat antilink in this group')
   case 'antilinkyoutubevideo': case 'antilinkyoutubevid': case 'antilinkytvid': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2742,6 +2799,7 @@ replay('Success in turning off youtube video antilink in this group')
     case 'antilinkyoutubech': case 'antilinkyoutubechannel': case 'antilinkytch': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2773,6 +2831,7 @@ replay('Success in turning off youtube channel antilink in this group')
       case 'antilinkinstagram': case 'antilinkig': case 'antilinkinsta': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2804,6 +2863,7 @@ replay('Success in turning off instagram antilink in this group')
         case 'antilinkfacebook': case 'antilinkfb': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2835,6 +2895,7 @@ replay('Success in turning off facebook antilink in this group')
           case 'antilinktelegram': case 'antilinktg': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2866,6 +2927,7 @@ replay('Success in turning off telegram antilink in this group')
             case 'antilinktiktok': case 'antilinktt': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2897,6 +2959,7 @@ replay('Success in turning off tiktok antilink in this group')
             case 'antilinktwt': case 'antilinktwitter': case 'antilinktwit': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2928,6 +2991,7 @@ replay('Success in turning off twitter antilink in this group')
               case 'antilinkall': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2959,6 +3023,7 @@ replay('Success in turning off all antilink in this group')
 case 'antivirus': case 'antivirtex': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -2990,6 +3055,7 @@ replay('Success in turning off antivirus this group')
     case 'autoreply': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -3014,6 +3080,7 @@ replay('Success in turning off autoreply in this group')
 case 'antitoxic': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -3045,6 +3112,7 @@ replay('Success in turning off antitoxic in this group')
 case 'antiwame': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 if (!isBotAdmins) return replay(mess.botAdmin)
 if (!isAdmins && !isCreator) return replay(mess.admin)
@@ -3076,6 +3144,7 @@ replay('Success in turning off antiwame in this group')
   case 'nsfw': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!isCreator) return replay(mess.owner)
 if (!isAdmins && !isCreator) return replay(mess.admin)
 if (args[0] === "on") {
@@ -3108,6 +3177,7 @@ replay('Success in turning off nsfw in this group')
              case 'mute': {
              	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -3131,6 +3201,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'setppbot': case 'setbotpp': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactsetpp}`, key: m.key }})
 if (!isCreator) return replay(mess.owner)
 if (!quoted) return replay(`Send/Reply Image With Caption ${prefix + command}`)
 if (!/image/.test(mime)) return replay(`Send/Reply Image With Caption ${prefix + command}`)
@@ -3143,6 +3214,7 @@ break
             case 'linkgroup': case 'linkgc': case 'gclink': case 'grouplink': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) return replay(`${mess.group}`)
                 let response = await XeonBotInc.groupInviteCode(m.chat)
                 XeonBotInc.sendText(m.chat, `https://chat.whatsapp.com/${response}\n\n${groupMetadata.subject} Group Link`, m, { detectLink: true })
@@ -3151,6 +3223,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'ephemeral': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.isGroup) replay(`${mess.group}`)
                 if (!isBotAdmins) return replay(`${mess.botAdmin}`)
                 if (!isAdmins) return replay(`${mess.admin}`)
@@ -3166,6 +3239,7 @@ case 'grupsetting':
             case 'groupsetting':{
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                     let sections = []
                     let com = [`group open`,`autosticker on`,`welcome on`,`antilinkgc on`,`antilinktg on`,`antilinktt on`,`antilinkytch on`,`antilinkytvid on`,`antilinkig on`,`antilinkfb on`,`antilinktwit on`,`antilinkall on`,`antiwame on`,`antitoxic on`,`antivirus on`,`autoreply on`,`group open`]
                     let comm = [`group close`,`autosticker off`,`welcome off`,`antilinkgc off`,`antilinktg on`,`antilinktt on`,`antilinkytch on`,`antilinkytvid on`,`antilinkig on`,`antilinkfb on`,`antilinktwit on`,`antilinkall on`,`antiwame on`,`antitoxic on`,`antivirus on`,`autoreply on`,`group close`]
@@ -3206,6 +3280,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'delete': case 'del': {
             	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!m.quoted) reply(false)
                 let { chat, fromMe, id, isBaileys } = m.quoted
                 if (!isBaileys) return replay(`The Message Was Not Sent By A Bot!`)
@@ -3215,6 +3290,7 @@ if (isBanChat) return reply(mess.banChat)
       case 'bcgc': case 'bcgroup': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!isCreator) return replay(mess.owner)
 if (!args.join(" ")) return replay(`Where is the text?\n\nExample : ${prefix + command} ${global.ownername}`)
 let getGroups = await XeonBotInc.groupFetchAllParticipating()
@@ -3224,11 +3300,6 @@ replay(`Send broadcast to ${anu.length} group chat, time's up ${anu.length * 1.5
 for (let i of anu) {
 await sleep(1500)
 let btn = [{
-urlButton: {
-displayText: 'YouTube 🍓',
-url: `${global.websitex}`
-}
-}, {
 urlButton: {
 displayText: 'Script 🍜',
 url: `${global.botscript}`
@@ -3258,6 +3329,7 @@ break
 case 'bc': case 'broadcast': case 'bcall': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!isCreator) return replay(mess.owner)
 if (!args.join(" ")) return replay(`Where is the text??\n\nExample : ${prefix + command} ${global.ownername}`)
 let anu = await store.chats.all().map(v => v.id)
@@ -3265,11 +3337,6 @@ replay(`Send Broadcast To ${anu.length} Chat\nTime's up ${anu.length * 1.5} seco
 for (let yoi of anu) {
 await sleep(1500)
 let btn = [{
-urlButton: {
-displayText: 'YouTube 🍓',
-url: `${global.websitex}`
-}
-}, {
 urlButton: {
 displayText: 'Script 🍜',
 url: `${global.botscript}`
@@ -3299,6 +3366,7 @@ break
  case 'bcimage': case 'bcvideo': case 'bcaudio': {
                   if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!isCreator) return replay(mess.owner)
                 if (!/video/.test(mime) && !/image/.test(mime) && !/audio/.test(mime)) return reply(`*Send/Reply Video/Audio/Image You Want to Broadcast With Caption* ${prefix + command}`)
                 let anu = await store.chats.all().map(v => v.id)
@@ -3307,11 +3375,6 @@ if (!isCreator) return replay(mess.owner)
                 for (let i of anu) {
                     await sleep(1500)
                     let butoon = [{
-                                urlButton: {
-                                displayText: 'YouTube 🍓',
-url: `${global.websitex}`
-                                }
-                            }, {
 urlButton: {
 displayText: 'Script 🍜',
 url: `${global.botscript}`
@@ -3355,6 +3418,7 @@ id: 'owner'
 case 'bcloc': {
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!isCreator) return replay(mess.owner)
                 if (!text) return reply(`Use ${prefix}bcloc text\n\nExample : ${prefix + command} attention everybody`)
                 let anu = await store.chats.all().map(v => v.id)
@@ -3370,6 +3434,7 @@ if (!isCreator) return replay(mess.owner)
 case 'chatinfo': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.quoted) replay('Reply Message')
 let msg = await m.getQuotedObj()
 if (!m.quoted.isBaileys) return replay('The message was not sent by a bot!')
@@ -3387,6 +3452,7 @@ break
 case 'q': case 'quoted': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.quoted) return replay('Reply Message!!')
 let wokwol = await XeonBotInc.serializeM(await m.getQuotedObj())
 if (!wokwol.quoted) return replay('The message you replied to does not contain a reply')
@@ -3396,6 +3462,7 @@ break
 case 'listpc': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 let anu = await store.chats.all().filter(v => v.id.endsWith('.net')).map(v => v)
 let teks = `     「 Personal Chat List 」\n\nThere are ${anu.length} users using bot in personal chat`
 for (let i of anu) {
@@ -3407,6 +3474,7 @@ break
 case 'listgc': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
 let teks = `     「 Group Chat 」\n\nThere are ${anu.length} users using bot in group chat`
 for (let i of anu) {
@@ -3424,6 +3492,7 @@ break
 case 'listonline': case 'listaktif': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!m.isGroup) return replay(mess.group)
 let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
 let online = [...Object.keys(store.presences[id]), botNumber]
@@ -3435,6 +3504,7 @@ case 'patrick':
 case 'patricksticker': {
 	                	            	            	if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 var ano = await fetchJson('https://raw.githubusercontent.com/rashidsiregar28/data/main/patrik')
 var wifegerak = ano.split('\n')
 var wifegerakx = wifegerak[Math.floor(Math.random() * wifegerak.length)]
@@ -3445,6 +3515,7 @@ break
        case 'attp2': {
 		   if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
            if (!text) return reply(`Example : ${prefix + command} text`)
            await XeonBotInc.sendMedia(m.chat, `https://xteam.xyz/${command}?file&text=${text}`, 'hisoka', 'morou', m, {asSticker: true})
 
@@ -3453,6 +3524,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'attp': {
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
            if (!text) reply(`Use ${prefix}attp hello\n*Example : ${prefix + command} ${ownername}*` )
            await XeonBotInc.sendMedia(m.chat, `https://cililitan.herokuapp.com/api/attp?teks=${text}`, 'Xeon', 'Op', m, {asSticker: true}).catch((err) => reply(mess.error))
          }
@@ -3460,6 +3532,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'ttp': {
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
            if (!text) return reply(`*Example : ${prefix + command} hello*`)
            await XeonBotInc.sendMedia(m.chat, `https://cililitan.herokuapp.com/api/texttopng2?teks=${text}`, 'A L Y A', 'B O T M D', m, {asSticker: true})
          
@@ -3467,6 +3540,7 @@ if (isBanChat) return reply(mess.banChat)
                      break
             case 'soundcloud': case 'scdl': {               
                 if (!text) return reply(mess.linkm)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!isUrl(args[0]) && !args[0].includes('soundcloud.com')) return reply(`*Not a soundcloud link*`)
                 xeonkey.SoundCloud(`${text}`).then(async (data) => {
                     let txt = `*SOUNDCLOUD DOWNLOADER*\n\n`
@@ -3489,6 +3563,7 @@ case 'dogestick':
 	case 'doge':{
 	                	            	            	if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 var ano = await fetchJson('https://raw.githubusercontent.com/rashidsiregar28/data/main/anjing')
 var wifegerak = ano.split('\n')
 var wifegerakx = wifegerak[Math.floor(Math.random() * wifegerak.length)]
@@ -3500,6 +3575,7 @@ case 'lovesticker':
 case 'lovestick' :{
 	            	            	if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 var ano = await fetchJson('https://raw.githubusercontent.com/rashidsiregar28/data/main/bucin')
 var wifegerak = ano.split('\n')
 var wifegerakx = wifegerak[Math.floor(Math.random() * wifegerak.length)]
@@ -3511,6 +3587,7 @@ case 'gura':
 case 'gurastick':{
 	                	            	            	if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 var ano = await fetchJson('https://raw.githubusercontent.com/rashidsiregar28/data/main/gura')
 var wifegerak = ano.split('\n')
 var wifegerakx = wifegerak[Math.floor(Math.random() * wifegerak.length)]
@@ -3521,6 +3598,7 @@ break
             case 'sticker': case 's': case 'stickergif': case 'sgif': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (/image/.test(mime)) {
 let media = await quoted.download()
 let encmedia = await XeonBotInc.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
@@ -3538,6 +3616,7 @@ break
 case 'swm': case 'take': case 'stickerwm': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!args.join(" ")) return reply(`Example :\nswm ${global.author}|${global.packname}`)
 const swn = args.join(" ")
 const pcknm = swn.split("|")[0];
@@ -3562,6 +3641,7 @@ break
 case 'smeme': case 'stickermeme': case 'stickmeme': {
 	   if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 let { TelegraPh } = require('./lib/uploader')
 if (!text) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
 if (text.includes('|')) return reply(`Send/Reply Photo With Caption ${prefix + command} *text*`)
@@ -3577,6 +3657,7 @@ break
             case 'ebinary': {
             	   if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.quoted.text && !text) return replay(`Reply Text With Caption ${prefix + command}`)
             let { eBinary } = require('./lib/binary')
             let teks = text ? text : m.quoted && m.quoted.text ? m.quoted.text : m.text
@@ -3587,6 +3668,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'dbinary': {
             	   if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             if (!m.quoted.text && !text) return replay(`Reply Text With Caption ${prefix + command}`)
             let { dBinary } = require('./lib/binary')
             let teks = text ? text : m.quoted && m.quoted.text ? m.quoted.text : m.text
@@ -3597,6 +3679,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'bts':
 if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 teks = `Here you go!`
 buffer = `https://api.dapuhy.xyz/api/randomimage/batues?apikey=0gly81wDky`
 XeonBotInc.sendMessage(from, {image:{url:buffer}, caption:"Here you go!"}, {quoted:m})
@@ -3624,6 +3707,7 @@ case 'meow':
 case 'tickle':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/${command}`)
                            var wbuttsss = [
@@ -3645,6 +3729,7 @@ case 'femdom': case 'cum': case 'ero': case 'cuckold': case 'blowjob': case 'bds
 case 'ahegao': case 'ass': case 'orgy': case 'panties': case 'pussy': case 'thighs': case 'yuri': case 'tentacles':
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!AntiNsfw) return reply(mess.nsfw)
 try{
 reply(mess.wait)
@@ -3657,6 +3742,7 @@ break
       if (isBan) return reply(mess.ban)	 			
    if (isBanChat) return reply(mess.banChat)
 if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)
 spankd = await axios.get(`https://nekos.life/api/v2/img/spank`)                                   
   let spbuff = await getBuffer(spankd.data.url)
@@ -3669,6 +3755,7 @@ case 'blowjobgif': case 'bj' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
 if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)
 bjd = await axios.get(`https://api.waifu.pics/nsfw/blowjob`)         
   let bjf = await getBuffer(bjd.data.url)
@@ -3681,6 +3768,7 @@ case 'hentaivid': case 'hentaivideo': {
 	                        	            	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
 if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 reply(mess.wait)
                 anu = await hentai()
                 result912 = anu[Math.floor(Math.random(), anu.length)]
@@ -3691,6 +3779,7 @@ case 'trap' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
 if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)
  waifudd = await axios.get(`https://waifu.pics/api/nsfw/${command}`)       
  let trapbot = [
@@ -3711,6 +3800,7 @@ case 'hneko' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
 if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
     waifudd = await axios.get(`https://waifu.pics/api/nsfw/neko`)
  let hnekobot = [
     {buttonId: `.hneko`, buttonText: {displayText: `Next ⚡`}, type: 1},
@@ -3730,6 +3820,7 @@ case 'nwaifu' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
 if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)
     waifudd = await axios.get(`https://waifu.pics/api/nsfw/waifu`)         
  let nwaifubot = [
@@ -3749,6 +3840,7 @@ case 'gasm':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
 	if (!AntiNsfw) return reply(mess.nsfw)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/${command}`)
                            var wbuttsss = [
@@ -3768,6 +3860,7 @@ break
 case 'smug2':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/smug`)
                            var wbuttsss = [
@@ -3787,6 +3880,7 @@ break
 case 'foxgirl':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/fox_girl`)
                            var wbuttsss = [
@@ -3806,6 +3900,7 @@ break
 case 'animenom' :
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
     waifudd = await axios.get(`https://waifu.pics/api/sfw/nom`)
  let xxhnekobot = [
     {buttonId: `.nom`, buttonText: {displayText: `Next ⚡`}, type: 1},
@@ -3823,6 +3918,7 @@ break
 case 'waifu3':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/waifu`)
                            var wbuttsss = [
@@ -3842,6 +3938,7 @@ break
 case 'neko2':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
    waifud = await axios.get('https://waifu.pics/api/sfw/neko')
                 var wbutsss = [
@@ -3861,6 +3958,7 @@ reply(mess.wait)
 case 'animecuddle':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/cuddle`)
                            var wbuttsss = [
@@ -3880,6 +3978,7 @@ break
 case 'animeslap':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/slap`)
                            var wbuttsss = [
@@ -3899,6 +3998,7 @@ break
 case 'animepat':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/pat`)
                            var wbuttsss = [
@@ -3918,6 +4018,7 @@ break
 case 'animeneko':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/neko`)
                            var wbuttsss = [
@@ -3937,6 +4038,7 @@ break
 case 'animehug':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/hug`)
                            var wbuttsss = [
@@ -3956,6 +4058,7 @@ break
 case 'animekiss':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/kiss`)
                            var wbuttsss = [
@@ -3975,6 +4078,7 @@ break
 case 'animewlp':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/wallpaper`)
                            var wbuttsss = [
@@ -3994,6 +4098,7 @@ break
 case 'animespank':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://nekos.life/api/v2/img/spank`)
                            var wbuttsss = [
@@ -4013,6 +4118,7 @@ break
 case 'animecry':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/cry`)
                            var wbutt1sss = [
@@ -4032,6 +4138,7 @@ break
 case 'animekill':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/kill`)
                            var wbuttszzss = [
@@ -4051,6 +4158,7 @@ break
 case 'animelick':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/lick`)
                            var wbuttszz12ss = [
@@ -4070,6 +4178,7 @@ break
 case 'animebite':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/bite`)
                            var wbuttszz123ss = [
@@ -4089,6 +4198,7 @@ break
 case 'animeyeet':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/yeet`)
                            var wbuttszz124ss = [
@@ -4108,6 +4218,7 @@ break
 case 'animebully':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/lick`)
                            var wbuttszz125ss = [
@@ -4127,6 +4238,7 @@ break
 case 'animebonk':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/bonk`)
                            var wbuttszz126ss = [
@@ -4146,6 +4258,7 @@ break
 case 'animewink':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/wink`)
                            var wbuttszz127ss = [
@@ -4165,6 +4278,7 @@ break
 case 'animepoke':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/poke`)
                            var wbuttszz128ss = [
@@ -4184,6 +4298,7 @@ break
 case 'animesmile':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/smile`)
                            var wbuttszz129ss = [
@@ -4203,6 +4318,7 @@ break
 case 'animewave':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/wave`)
                            var wbuttszz1210ss = [
@@ -4222,6 +4338,7 @@ break
 case 'animeawoo':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/awoo`)
                            var wbuttszz1211ss = [
@@ -4241,6 +4358,7 @@ break
 case 'animeblush':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/blush`)
                            var wbuttszz1212ss = [
@@ -4260,6 +4378,7 @@ break
 case 'animesmug':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/smug`)
                            var wbuttszz1213ss = [
@@ -4279,6 +4398,7 @@ break
 case 'animeglomp':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/glomp`)
                            var wbuttszz1214ss = [
@@ -4298,6 +4418,7 @@ break
 case 'animehappy':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/happy`)
                            var wbuttszz1215ss = [
@@ -4317,6 +4438,7 @@ break
 case 'animedance':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/dance`)
                            var wbuttszz1216ss = [
@@ -4336,6 +4458,7 @@ break
 case 'animecringe':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/cringe`)
                            var wbuttszz1217ss = [
@@ -4355,6 +4478,7 @@ break
 case 'animehighfive':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/highfive`)
                            var wbuttszz1218ss = [
@@ -4374,6 +4498,7 @@ break
 case 'animehandhold':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/handhold`)
                            var wbuttszz1219ss = [
@@ -4393,6 +4518,7 @@ break
 case 'animemegumin':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://api.waifu.pics/sfw/megumin`)
                            var wbuttszz1220ss = [
@@ -4412,6 +4538,7 @@ break
 case 'shinobu2':  
  if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
                     ud = await axios.get('https://waifu.pics/api/sfw/shinobu')
 var wbutsss = [
@@ -4431,6 +4558,7 @@ break
 case 'megumin2':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
                     ud = await axios.get('https://waifu.pics/api/sfw/megumin')
 var wbutsss = [
@@ -4450,6 +4578,7 @@ break
 case 'awoo2':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
  waifudd = await axios.get(`https://waifu.pics/api/sfw/awoo`)
  var wbuttsss = [
@@ -4469,6 +4598,7 @@ break
 case 'animewall2': case 'animewallpaper2':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 reply(mess.wait)						
 const { AnimeWallpaper } =require("anime-wallpaper")
 if(!q) return reply('What wallpaper do you want?')
@@ -4497,6 +4627,7 @@ break
 case 'cry':case 'kill':case 'hug':case 'pat':case 'lick':case 'kiss':case 'bite':case 'yeet':case 'neko':case 'bully':case 'bonk':case 'wink':case 'poke':case 'nom':case 'slap':case 'smile':case 'wave':case 'awoo':case 'blush':case 'smug':case 'glomp':case 'happy':case 'dance':case 'cringe':case 'cuddle':case 'highfive':case 'shinobu':case 'megumin':case 'handhold':
    if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 					axios.get(`https://api.waifu.pics/sfw/${command}`)
 					.then(({data}) => {
 						XeonBotInc.sendImageAsSticker(m.chat, data.url, m, { packname: global.packname, author: global.author })
@@ -4505,6 +4636,7 @@ case 'cry':case 'kill':case 'hug':case 'pat':case 'lick':case 'kiss':case 'bite'
 case 'waifu': case 'loli':
 					   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 					reply(mess.wait)
 					axios.get(`https://api.waifu.pics/sfw/waifu`)
 					.then(({data}) => {
@@ -4514,6 +4646,7 @@ case 'waifu': case 'loli':
 case 'naruto':
 			if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 				reply(mess.wait)
 			    var query = ["naruto hd","naruto boruto","naruto sasuke", "naruto aesthetic", "naruto aesthetic"]
                 var data = await pinterest(pickRandom(query))
@@ -4523,6 +4656,7 @@ case 'naruto':
 case 'yaoi':
 			if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 				reply(mess.wait)
 			    var query = ["yaoi","yaoi aesthetic","yaoi hd","yaoi ganteng"]
                 var data = await pinterest(pickRandom(query))
@@ -4532,6 +4666,7 @@ case 'yaoi':
 case 'coffee': case 'kopi': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             let buttons = [
                     {buttonId: `coffe`, buttonText: {displayText: 'Next Image'}, type: 1}
                 ]
@@ -4548,6 +4683,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'zippyshare': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!text) return reply(mess.linkm)
 if (!isUrl(args[0]) && !args[0].includes('zippyshare.com')) return reply(`The link is not a zippyshare link`)
 anu = await fetchJson(`https://violetics.pw/api/downloader/zippyshare?apikey=df7d-425a-3bc8&url=${text}`)
@@ -4559,6 +4695,7 @@ break
 case 'savefrom': {
 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
   if (!text) return m.reply(`Failed to download media and send audio ${prefix + command} url link`) 
   if (!isUrl(args[0]) && !args[0].includes('facebook.com')) return reply(`The link you provided is invalid`)
   let noh = require('@bochilteam/scraper')                
@@ -4593,6 +4730,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'jail': case 'pixelate': case 'blur': case 'imagesketch': case 'triggeredwebp': case 'shit': case 'burn': case 'invert': case 'wanted': case 'rip': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	            if (!/image/.test(mime)) return reply(`*Send/Reply Image With Caption* ${prefix + command}`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader2')
                 let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)                
@@ -4604,6 +4742,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'gayeffect': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	            if (!/image/.test(mime)) return reply(`*Send/Reply Image With Caption* ${prefix + command}`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader2')
                 let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)                
@@ -4615,6 +4754,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'deleteeffect': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	            if (!/image/.test(mime)) return reply(`*Send/Reply Image With Caption* ${prefix + command}`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader2')
                 let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)                
@@ -4626,6 +4766,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'framed': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	            if (!/image/.test(mime)) return reply(`*Send/Reply Image With Caption* ${prefix + command}`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader2')
                 let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)                
@@ -4637,6 +4778,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'beautifuleffect': {
 	if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	            if (!/image/.test(mime)) return reply(`*Send/Reply Image With Caption* ${prefix + command}`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader2')
                 let media = await XeonBotInc.downloadAndSaveMediaMessage(quoted)                
@@ -4648,6 +4790,7 @@ if (isBanChat) return reply(mess.banChat)
             case 'readmore': {
             if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
                 if (!text) return reply(`Example : ${prefix + command} halo gaes`)
                 anu = await fetchJson(`https://cililitan.herokuapp.com/api/readmore?teks=${text}`)
                reply(`${anu.result}`)
@@ -4656,6 +4799,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'toviewonce': case 'toonce': { 
 	   if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
         if (!quoted) return reply(`Reply image`)
         if (/image/.test(mime)) {
 anu = await XeonBotInc.downloadAndSaveMediaMessage(quoted)
@@ -4669,6 +4813,7 @@ XeonBotInc.sendMessage(m.chat, {image: {url: anu},viewOnce : true},{quoted: m })
         case 'tinyurl': {
         	 if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
             reply(mess.wait)
             try {
               anu = await axios.get(`https://tinyurl.com/api-create.php?url=${q}`)
@@ -4682,6 +4827,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'fliptext': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (args.length < 1) return replay(`Example:\n${prefix}fliptext ${ownername}`)
 quere = args.join(" ")
 flipe = quere.split('').reverse().join('')
@@ -4691,6 +4837,7 @@ break
 case 'toletter': {
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!Number(args[0])) return replay(`Example:\n${prefix}toletter 956`)
 try {
 quere = args.join(" ")
@@ -4703,6 +4850,7 @@ replay(`Error!`)
 break
 case 'translate': case 'trans': {
 if (isBan) return reply(mess.ban)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if (!args.join(" ")) return replay("The text?")
 tes = await fetchJson (`https://megayaa.herokuapp.com/api/translate?to=en&kata=${args.join(" ")}`)
 Infoo = tes.info
@@ -4873,12 +5021,14 @@ case 'sound160':
 case 'sound161':
 if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 xeony_buffer = await getBuffer(`https://github.com/DGXeon/Tiktokmusic-API/raw/master/tiktokmusic/${command}.mp3`)
 await XeonBotInc.sendMessage(m.chat, { audio: xeony_buffer, mimetype: 'audio/mp4', ptt: true }, { quoted: m })     
 break
 case'glitch3':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text|text`)
 reply(mess.wait)
 teks1 = q.split("|")[0]
@@ -4892,6 +5042,7 @@ maker.textpro("https://textpro.me/create-glitch-text-effect-style-tik-tok-983.ht
 case '3dbox':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/3d-box-text-effect-online-880.html", [
@@ -4904,6 +5055,7 @@ break
 case 'waterdrop':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
  maker.textpro("https://textpro.me/dropwater-text-effect-872.html", [
@@ -4916,6 +5068,7 @@ reply(mess.wait)
 case 'lion2':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
   if(!q) return reply(`Use ${prefix + command} text`)
   reply(mess.wait)
   maker.textpro("https://textpro.me/create-lion-logo-mascot-online-938.html", [
@@ -4928,6 +5081,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'papercut':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
       if(!q) return reply(`Use ${prefix + command} text`)
       reply(mess.wait)
       maker.textpro("https://textpro.me/create-art-paper-cut-text-effect-online-1022.html", [
@@ -4940,6 +5094,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'transformer':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
       if(!q) return reply(`Use ${prefix + command} text`)
       reply(mess.wait)
       maker.textpro("https://textpro.me/create-a-transformer-text-effect-online-1035.html", [
@@ -4952,6 +5107,7 @@ break
 case 'harrypot':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
        if(!q) return reply(`Use ${prefix + command} text|text`)
        reply(mess.wait)
        teks1 = q.split("|")[0]
@@ -4966,6 +5122,7 @@ if (isBanChat) return reply(mess.banChat)
 case 'neondevil':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
       if(!q) return reply(`Use ${prefix + command} text`)
       reply(mess.wait)
       maker.textpro("https://textpro.me/create-neon-devil-wings-text-effect-online-free-1014.html", [
@@ -4978,6 +5135,7 @@ if (isBanChat) return reply(mess.banChat)
 case '3dstone':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/3d-stone-cracked-cool-text-effect-1029.html", [
@@ -4990,6 +5148,7 @@ maker.textpro("https://textpro.me/3d-stone-cracked-cool-text-effect-1029.html", 
 case '3davengers':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/create-3d-avengers-logo-online-974.html", [
@@ -5002,6 +5161,7 @@ maker.textpro("https://textpro.me/create-3d-avengers-logo-online-974.html", [
 case 'thunder':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/online-thunder-text-effect-generator-1031.html", [
@@ -5014,6 +5174,7 @@ maker.textpro("https://textpro.me/online-thunder-text-effect-generator-1031.html
 case 'window':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/write-text-on-foggy-window-online-free-1015.html", [
@@ -5024,6 +5185,7 @@ maker.textpro("https://textpro.me/write-text-on-foggy-window-online-free-1015.ht
    case 'blackpinkneon':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/create-neon-light-blackpink-logo-text-effect-online-1081.html", [
@@ -5036,6 +5198,7 @@ case 'graffiti':
    case 'grafiti':
       if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text|text`)
 reply(mess.wait)
 teks1 = q.split("|")[0]
@@ -5051,6 +5214,7 @@ maker.textpro("https://textpro.me/create-a-cool-graffiti-text-on-the-wall-1010.h
 case 'pornhub2':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 teks1 = q.split("|")[0]
@@ -5066,6 +5230,7 @@ maker.textpro("https://textpro.me/pornhub-style-logo-online-generator-free-977.h
 case 'blackpink2':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html", [
@@ -5077,6 +5242,7 @@ maker.textpro("https://textpro.me/create-blackpink-logo-style-online-1001.html",
 case 'glitch':
    if (isBan) return reply(mess.ban)	 			
 if (isBanChat) return reply(mess.banChat)
+XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 if(!q) return reply(`Use ${prefix + command} text`)
 reply(mess.wait)
 maker.textpro("https://textpro.me/create-impressive-glitch-text-effects-online-1027.html", [
@@ -8771,11 +8937,6 @@ case 'alive': case 'panel': case 'list': case 'menu': case 'help': case '?': {
 if (isBanChat) return reply(mess.banChat)
 XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 	                let btn = [{
-                                urlButton: {
-                                    displayText: 'YouTube 🍒',
-                                    url: `${websitex}`
-                                }
-                            }, {
                                 callButton: {
                                     displayText: 'Script 🍜',
                                     url: `${botscript}`
@@ -8809,7 +8970,6 @@ XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key 
                         /////////XeonBotInc.send5ButMsg(m.chat, menulist, global.botname, btn)
                         } else if (setbot.templateDocument) {
                         let buttonmenu = [
-        	{ urlButton: { displayText: `YouTube 🍒`, url : `${websitex}` } },
             { urlButton: { displayText: `Script 🍜`, url: `${botscript}` } },
             { quickReplyButton: { displayText: `All Menu 🍱`, id: 'allmenu'} },
             { quickReplyButton: { displayText: `List Menu 🍢`, id: 'command'} },
@@ -8822,6 +8982,7 @@ XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key 
                 case 'command': {
                 	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+	XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 let template = await generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                 listMessage :{
                     title: `Hi ${pushname}`,
@@ -8979,6 +9140,7 @@ let template = await generateWAMessageFromContent(m.chat, proto.Message.fromObje
 case 'allmenu':
 	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
+	XeonBotInc.sendMessage(from, { react: { text: `${global.reactmoji}`, key: m.key }})
 var unicorn = await getBuffer(picak+'All Menu')
 await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」	
 ╠ ${prefix}antitag
@@ -9670,7 +9832,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠ ${prefix}donate
 ╠ ${prefix}request
 ╠ ${prefix}report [bug]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'ownermenu':
 	   if (isBan) return reply(mess.ban)
@@ -9693,7 +9855,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OWNER 」
 ╠ ${prefix}bcloc [text]
 ╠ ${prefix}setppbot [image]
 ╠ ${prefix}setexif
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'groupmenu':
 	   if (isBan) return reply(mess.ban)
@@ -9739,7 +9901,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 GROUP 」
 ╠${prefix}upvote
 ╠${prefix}checkvote
 ╠${prefix}delvote
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'rpgmenu':
 	   if (isBan) return reply(mess.ban)
@@ -9757,7 +9919,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 RPG 」
 ╠${prefix}profile
 ╠${prefix}inventory
 ╠${prefix}leaderboard
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'makermenu':
 	   if (isBan) return reply(mess.ban)
@@ -9871,7 +10033,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 MAKER 」
 ╠${prefix}halloween
 ╠${prefix}watercolor
 ╠${prefix}classic
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'downloadmenu':
 	   if (isBan) return reply(mess.ban)
@@ -9898,7 +10060,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 DOWNLOAD 」
 ╠${prefix}gitclone [repo link]
 ╠${prefix}soundcloud [url]
 ╠${prefix}zippyshare [url]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'searchmenu':
 	   if (isBan) return reply(mess.ban)
@@ -9930,7 +10092,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 SEARCH 」
 ╠${prefix}wattpad [query]
 ╠${prefix}mcserver [ip|port]
 ╠${prefix}drakor [query]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'convertmenu':
 	   if (isBan) return reply(mess.ban)
@@ -9965,7 +10127,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 CONVERT 」
 ╠ ${prefix}robot [reply aud]
 ╠ ${prefix}slow [reply aud]
 ╠ ${prefix}squirrel [reply aud]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'randomimagemenu':
 	   if (isBan) return reply(mess.ban)
@@ -9984,7 +10146,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 RANDOM IMG �
 ╠${prefix}wallcode
 ╠${prefix}animewall [query]
 ╠${prefix}animewall2 [query]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 
 case 'emotemenu':
@@ -10004,7 +10166,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 EMOTE 」
 ╠${prefix}googleemoji
 ╠${prefix}pediaemoji
 ╠${prefix}microsoftemoji
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'imageeffectmenu':
 	   if (isBan) return reply(mess.ban)
@@ -10025,7 +10187,7 @@ await XeonBotInc.send5ButImg(from, `╔═════✪「 IMG EFFECT 」
 ╠${prefix}beautifuleffect
 ╠${prefix}deleteeffect
 ╠${prefix}pixelate
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'animemenu':
 	   if (isBan) return reply(mess.ban)
@@ -10079,7 +10241,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 ANIME 」
 ╠${prefix}megumin2
 ╠${prefix}loli
 ╠${prefix}couplepp
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'stickermenu':
 	   if (isBan) return reply(mess.ban)
@@ -10093,7 +10255,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 STICKER 」
 ╠ ${prefix}ttp
 ╠ ${prefix}doge
 ╠ ${prefix}lovesticker
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'animestickermenu':
 	   if (isBan) return reply(mess.ban)
@@ -10129,7 +10291,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 ANIME STICKER
 ╠${prefix}cringe
 ╠${prefix}neko
 ╠${prefix}gura
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'nsfwmenu':
 	   if (isBan) return reply(mess.ban)
@@ -10161,7 +10323,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 NSFW 」
 ╠${prefix}spank
 ╠${prefix}hneko
 ╠${prefix}nwaifu
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'funmenu':
 	   if (isBan) return reply(mess.ban)
@@ -10232,7 +10394,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 Fun 」
 ╠ ${prefix}playboy
 ╠ ${prefix}fuckgirl
 ╠ ${prefix}playgirl
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'soundmenu':
 	   if (isBan) return reply(mess.ban)
@@ -10400,7 +10562,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 Sound 」
 ╠ ${prefix}sound159
 ╠ ${prefix}sound160
 ╠ ${prefix}sound161
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate ??","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'gamemenu':
 	   if (isBan) return reply(mess.ban)
@@ -10414,7 +10576,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 GAME 」
 ╠ ${prefix}guess [option]
 ╠ ${prefix}math [mode]
 ╠ ${prefix}suitpvp [tag]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'anonymousmenu':
 	   if (isBan) return reply(mess.ban)
@@ -10425,7 +10587,7 @@ await XeonBotInc.send5ButImg(from, `╔═══✪「 ANONYMOUS 」
 ╠${prefix}start
 ╠${prefix}next
 ╠${prefix}leave
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'toolmenu':
 	   if (isBan) return reply(mess.ban)
@@ -10435,7 +10597,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 TOOL 」
 ╠ ${prefix}translate [text]
 ╠ ${prefix}fliptext [text]
 ╠ ${prefix}toletter [number]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'databasemenu':
 	   if (isBan) return reply(mess.ban)
@@ -10450,7 +10612,7 @@ await XeonBotInc.send5ButImg(from, `╔═══✪「 DATABASE 」
 ╠ ${prefix}listmsg
 ╠ ${prefix}getmsg
 ╠ ${prefix}delmsg
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'indomenu':
 	   if (isBan) return reply(mess.ban)
@@ -10481,7 +10643,7 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 INDO 」
 ╠ ${prefix}covidindo
 ╠ ${prefix}earthquake
 ╠ ${prefix}tvschedule
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'indohoroscopemenu':
 	   if (isBan) return reply(mess.ban)
@@ -10518,7 +10680,7 @@ await XeonBotInc.send5ButImg(from, `╔═✪「 INDO HOROSCOPE 」
 ╠${prefix}masasubur
 ╠${prefix}zodiak
 ╠${prefix}shio
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'othermenu':
 	   if (isBan) return reply(mess.ban)
@@ -10543,13 +10705,13 @@ await XeonBotInc.send5ButImg(from, `╔═══════✪「 OTHER 」
 ╠ ${prefix}donate
 ╠ ${prefix}request
 ╠ ${prefix}report [bug]
-╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "YouTube 📍","url": `${websitex}`}},{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Donate 🍜","id": 'donate'}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
+╚═════════════✪` + '' + ' ', `${botname}`,unicorn, [{"urlButton": {"displayText": "Script🔖","url": `${botscript}`}},{"quickReplyButton": {"displayText": "Owner 👤","id": 'owner'}}] )
 break
 case 'tqtt': 
 	   if (isBan) return reply(mess.ban)
 	if (isBanChat) return reply(mess.banChat)
 reply(`Thanks to
-LORD BUDDHA
+My GOD
 Xeon (Me)
 My family
 And all friends who helped assemble this sexy script !!!`)
